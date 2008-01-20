@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="jastrology" basedir="." default="compile">
+
+    <!-- Local and user preferences -->
+
+    <property file="src/com/ivstars/astrology/version.info"/>
+
+    <property file="build.properties"/>
+
+    <property name="project.name" value="jastrology" />
+
+    <property name="conf" value="config"/>
+
+    <property name="src" value="src"/>
+
+    <property name="build" value="build"/>
+
+    <property name="dist" value="dist"/>
+    <property name="pack" value="pack"/>
+
+    <property name="lib" value="lib"/>
+    <property name="web" value="web"/>
+    <property name="webapp.context" value="jastro"/>
+    <property name="j2ee.lib" value="D:/develop/apache-tomcat-5.5.15/common/lib"/>
+
+    <property name="encoding"  value="UTF-8" />
+    <property name="setup.args" value=""/>
+    <property name="version" value="0.1"/>
+    <property name="izpack.home" value="C:/Program Files/IzPack"/>
+
+    <path id="class.path">
+        <fileset dir="${lib}" includes="*.jar"/>
+	    <fileset dir="${j2ee.lib}" includes="*.jar" />
+    </path>
+    
+    <target name="init">
+
+        <tstamp/>
+        <echo message="-----Star building at ${TODAY} ${DSTAMP} ${TSTAMP}-----"/>
+        <mkdir dir="${build}"/>
+        <mkdir dir="${dist}"/>
+        <mkdir dir="${pack}"/>
+        <mkdir dir="${dist}/WEB-INF"/>
+        <mkdir dir="${dist}/WEB-INF/classes"/>
+        <mkdir dir="${dist}/WEB-INF/lib"/>
+
+    </target>
+
+
+
+    <target name="compile" depends="init" description="compile whole project">
+
+        <!-- Compile the java code from ${src} into ${build} -->
+
+        <javac destdir="${build}" compiler="modern" encoding="${encoding}" debug="on"  >
+
+            <src path="${src}" />
+
+            <classpath refid="class.path"/>
+
+        </javac>
+
+        <!-- Copy resource and template files to build directory -->
+
+        <copy todir="${build}">
+            <fileset dir="templates" includes="**/*.vm"/>
+        </copy>
+        <copy todir="${build}">
+            <fileset dir="${src}" excludes="**/*.java,**/*.properties,com/ivstars/astrology/version.info"/>
+        </copy>
+        <copy file="${src}/com/ivstars/astrology/version.info" tofile="${build}/com/ivstars/astrology/version.info" overwrite="true">
+                <filterset>
+                    <filter token="builddate" value="${DSTAMP}"/>
+                </filterset>
+            </copy>
+
+        <copy todir="${build}">
+            <fileset dir="resource" includes="**/*.gif,**/*.jpg,**/*.png,**/*.ttf"/>
+        </copy>
+        <native2ascii encoding="${encoding}" dest="${build}" src="${src}" includes="**/*.properties">
+        </native2ascii>
+    </target>
+
+    <target name="copyweb" description="copy web files to dist directory">
+        <copy todir="${dist}">
+		<fileset dir="${web}">
+                <include name="**/*.*"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="run" depends="compile" description="run chart">
+         <java classname="com.ivstars.astrology.gui.Chart">
+             <classpath >
+                 <fileset dir="${lib}" includes="*.jar"/>
+                 <pathelement location="${build}"/>
+             </classpath>
+         </java>
+    </target>
+
+	<target name="jar" depends="compile" description="pack the jar file">
+		<jar destfile="${build}/${project.name}-${version}.jar" basedir="${build}" includes="com/**/*.*,swisseph/*.*,images/**/*.*,fonts/*.*"></jar>
+	</target>
+    <target name="dist" depends="jar" description="distribute the project">
+        <antcall target="copyweb"/>
+        <copy todir="${dist}/WEB-INF/classes">
+            <fileset dir="${build}">
+                <include name="*.*"/>
+				<exclude name="*.jar"/>
+            </fileset>
+        </copy>
+        <copy todir="${dist}/WEB-INF/lib">
+            <fileset dir="${lib}" excludes="junit*"/>
+			<fileset file="${build}/*.jar"/>
+        </copy>
+        <copy todir="${dist}/WEB-INF">
+            <fileset dir="." includes="ephe/*.*"/>
+            <fileset dir="resource" includes="CN.xls"/>
+            <fileset dir="." includes="jastrology.bat,addpath.bat,Licence.txt,Readme.txt"/>
+            <fileset dir="resource" includes="star.ico"/>
+        </copy>
+        
+    </target>
+    <target name="clean" description="Clean up build and dist directories. ">
+            <delete dir="${build}"/>
+            <delete dir="${dist}"/>
+						<delete dir="${pack}"/>
+    </target>
+
+    <target name="war" depends="dist" description="package webApp war">
+         <delete file="${pack}/${webapp.context}.war"/>
+        <jar jarfile="${pack}/${webapp.context}.war" basedir="${dist}"/>
+    </target>
+
+    <target name="lightwar" description="package webapp without lib jars">
+        <delete file="${pack}/${project.name}.light.zip"/>
+        <zip zipfile="${pack}/${project.name}.light.zip" basedir="${dist}" >
+            <exclude name="WEB-INF/lib/*.jar"/>
+            <exclude name="images/*.*"/>
+        </zip>
+    </target>
+    <target name="res" >
+        <delete file="${pack}/${project.name}.res.zip"/>
+        <zip zipfile="${pack}/${project.name}.res.zip" basedir="${dist}/WEB-INF">
+            <include name="*.*"/>
+            <include name="classes/*.*"/>
+        </zip>
+    </target>
+    <target name="pack.source" depends="init" description="dist all source code without lib">
+    	<delete file="${pack}/${project.name}-src.${DSTAMP}.zip"/>
+    	<zip zipfile="${pack}/${project.name}-src.${DSTAMP}.zip" >
+		<fileset dir="." >
+			<exclude name="**/CVS"/>
+			<include name="src/**" />
+			<include name="test/**" />
+			<include name="templates/**" />
+			<include name="web/**" />
+			<include name="build.*"/>
+		</fileset>
+	</zip>
+    </target>
+    <target name="dist.source"  depends="init" description="dist all source code with lib">
+    	<delete file="${pack}/${project.name}-src-dist.${DSTAMP}.zip"/>
+    	<zip zipfile="${pack}/${project.name}-src-dist.${DSTAMP}.zip" >
+		<fileset dir="." >
+			
+			<include name="src/**" />
+			<include name="test/**" />
+			<include name="templates/**" />
+			<include name="resource/**"/>
+			<include name="lib/**" />
+			<include name="web/**" />
+			<include name="build.*"/>
+			<include name="Readme.txt"/>
+			<include name="License.txt"/>
+			<include name="index.htm"/>
+			<include name="install.xml"/>
+			<include name="*.bat"/>
+			<include name="*.sh"/>
+			<include name="Changelogs.txt"/>
+			<exclude name="**/CVS"/>
+			<exclude name="**/Thumbs.db"/>
+		</fileset>
+	</zip>
+    </target>
+    <target name="javadoc" description="generate java doclet">
+    	<javadoc
+            destdir="docs/api"
+            author="false"
+            version="true"
+            windowtitle="Jastrology API"
+            bottom="-==a javacat product==-"
+            >
+	    <fileset dir="${src}" ><include name="**/*.java" /></fileset>
+        <classpath refid="class.path"/>
+       </javadoc>
+    </target>
+    <target name="showcp">
+        <pathconvert pathsep=";" refid="class.path" property="class_path"/>
+        <echo message="${class_path}"/>
+    </target>
+    
+    <target name="izpack" depends="dist" description="generate install jar using izpack">
+        <taskdef name="izpack" classpath="${izpack.home}/lib/compiler.jar"
+                classname="com.izforge.izpack.ant.IzPackTask"/>
+        <izpack input="install.xml"
+            output="${pack}/${project.name}-install-${version}-${release}.jar"
+            installerType="standard" basedir="${dist}/WEB-INF" izPackDir="${izpack.home}/"/>
+    </target>
+</project>
+

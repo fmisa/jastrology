@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration>
+
+	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+  		     <param name="ConversionPattern"
+                            value="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
+		</layout>
+	</appender>
+
+	<appender name="LOGFILE" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="jastrology.log"/>
+		<param name="DatePattern" value="'.'yyyy-MM-dd"/>
+		<layout class="org.apache.log4j.PatternLayout">
+  		     <param name="ConversionPattern"
+                            value="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
+		</layout>
+	</appender>
+
+<!--    <appender name="LF5" class="org.apache.log4j.lf5.LF5Appender">-->
+<!--     <param name="MaxNumberOfRecords" value="1000"/>-->
+<!--    </appender>-->
+
+  
+    <category name="com.ivstars" additivity="false">
+	    <priority value="debug" />
+	    <appender-ref ref="CONSOLE"/>
+    </category>
+
+<!--    <category name="com.capchip.civet.struts.form" >-->
+<!--        <priority value="debug" />-->
+<!--        <appender-ref ref="LF5" />-->
+<!--    </category>-->
+
+   
+
+
+   
+	<root>
+		<priority value="info"/>
+		<appender-ref ref="CONSOLE"/>
+	</root>	
+</log4j:configuration>

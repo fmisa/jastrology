@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+
+<shortcuts>
+
+  <skipIfNotSupported />
+
+  <programGroup defaultName="星天下\Jastrology" location="applications"/>
+
+
+  <shortcut
+     name="Jastrology"
+     programGroup="yes"
+     desktop="yes"
+     applications="no"
+     startMenu="no"
+     startup="no"
+     target="$INSTALL_PATH\jastrology.bat"
+     workingDirectory="$INSTALL_PATH"     
+     commandLine=""
+     description="启动 Jastrology"
+     iconFile="$INSTALL_PATH\star.ico"
+     iconIndex="0"
+     initialState="noShow">
+
+     <createForPack name="Base"/>
+
+   </shortcut>
+
+
+   <shortcut
+     name="Jastrology Readme 文档"
+     programGroup="yes"
+     desktop="no"
+     applications="no"
+     startMenu="no"
+     startup="no"
+     target="$INSTALL_PATH\Readme.txt"
+     commandLine=""
+     description="Jastrology Readme 文档">
+
+     <createForPack name="Base" />
+   </shortcut>
+
+   <shortcut
+     name="Jastrology Uninstaller"
+     programGroup="yes"
+     desktop="no"
+     applications="no"
+     startMenu="no"
+     startup="no"
+     target="$INSTALL_PATH\Uninstaller\uninstaller.jar"
+     commandLine=""
+	 iconFile="%SystemRoot%\system32\SHELL32.dll"
+     iconIndex="31"
+     description="This uninstalls Jastrology">
+
+     <createForPack name="Base" />
+   </shortcut>
+
+</shortcuts>

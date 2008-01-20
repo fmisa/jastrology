@@ -1,0 +1,13 @@
+2008-1-20
+	fixed build file, prepare to check-in the source to sf.net
+2006-6-7
+  Enhanced gif image output.
+  add init-param 'planets' for AstrologyServlet, so planets in the horoscope is configurable.
+
+2006-6-2
+  Configurable default render in /jastrology.properties
+  add shortcuts panel of izpack install.xml, the installer can create shortcuts now 
+  (only Windows shortcuts config file is provided).
+
+2006-5-31
+  0.1 beta preview 

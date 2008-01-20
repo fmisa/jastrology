@@ -1,0 +1,128 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Location Servlet 测试页面</title>
+    <script type="text/javascript" language="javascript">
+        var xmlHttp;
+        var longitudes;
+        var latitudes;
+        function createXMLHttpRequest() {
+            if (window.ActiveXObject) {
+                xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+            } else if (window.XMLHttpRequest) {
+                xmlHttp = new XMLHttpRequest();
+            }
+        }
+
+        function handleStateChange() {
+            if (xmlHttp.readyState == 4) { //请求完成
+                if (xmlHttp.status == 200) { //成功得到请求内容
+                    //提示返回的信息
+                    // document.getElementById("result").value = xmlHttp.responseText;
+                    var results= xmlHttp.responseXML;
+                    var city = document.getElementById("city");
+                    //clear city
+                    while (city.length > 0) {
+                        city.remove(0);
+                    }
+                    var locations = results.getElementsByTagName("location");
+                    var count = locations.length;
+
+                    longitudes = new Array(count);
+                    latitudes = new Array(count);
+                    var location;
+                    for(var i=0;i<count;i++){
+                        location = locations[i];
+                        city.appendChild(createOption(getElementText(location,"name")));
+                        longitudes[i]=getElementText(location,"longitude");
+                        latitudes[i]=getElementText(location,"latitude");
+                    }
+                    changeLocation();
+                } else {
+                    document.getElementById("status").innerHTML ="<font color='red'>status:" +xmlHttp.status +"<br>"+ xmlHttp.statusText+"</font>";
+                }
+            }
+        }
+
+        function changeProvince() {
+            var province = document.getElementById("province").value;
+            if(province==""){
+                alert("请选择一个省份");
+                return;
+            }
+
+            //document.location.href="location?province="+province;
+            createXMLHttpRequest();
+            xmlHttp.onreadystatechange = handleStateChange;
+
+            xmlHttp.open("POST", "location", true);
+            xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xmlHttp.send("province=" + province);
+
+        }
+        function changeLocation(){
+            var index = document.getElementById("city").selectedIndex;
+            document.getElementById("longitude").value=longitudes[index];
+            document.getElementById("latitude").value=latitudes[index];
+        }
+        function createOption(text){
+            var option = document.createElement("option");
+            var textNode = document.createTextNode(text);
+            option.setAttribute("value",text);
+            option.appendChild(textNode);
+            return option;
+        }
+        function getElementText(parent,name){
+            return parent.getElementsByTagName(name)[0].firstChild.nodeValue;
+        }
+    </script>
+</head>
+
+<body>
+
+<form action="" method="post">
+    <select id="province" name="province" onchange="changeProvince()">
+        <option value="">－请选择－</option>
+        <option value="北京市">北京市</option>
+        <option value="安徽省">安徽省</option>
+        <option value="重庆市">重庆市</option>
+        <option value="福建省">福建省</option>
+        <option value="甘肃省">甘肃省</option>
+        <option value="广东省">广东省</option>
+        <option value="广西壮族自治区">广西壮族自治区</option>
+        <option value="贵州省">贵州省</option>
+        <option value="海南省">海南省</option>
+        <option value="河北省">河北省</option>
+        <option value="河南省">河南省</option>
+        <option value="黑龙江省">黑龙江省</option>
+        <option value="湖北省">湖北省</option>
+        <option value="湖南省">湖南省</option>
+        <option value="吉林省">吉林省</option>
+        <option value="江苏省">江苏省</option>
+        <option value="江西省">江西省</option>
+        <option value="辽宁省">辽宁省</option>
+        <option value="内蒙古">内蒙古</option>
+        <option value="宁夏回族自治区">宁夏回族自治区</option>
+        <option value="青海省">青海省</option>
+        <option value="山东省">山东省</option>
+        <option value="山西省">山西省</option>
+        <option value="陕西省">陕西省</option>
+        <option value="上海市">上海市</option>
+        <option value="四川省">四川省</option>
+        <option value="天津市">天津市</option>
+        <option value="西藏自治区">西藏自治区</option>
+        <option value="新疆维吾尔族自治区">新疆维吾尔族自治区</option>
+        <option value="云南省">云南省</option>
+        <option value="浙江省">浙江省</option>
+        <option value="港澳台">港澳台</option>
+        <option value="不存在">不存在的省</option>
+    </select>
+    <select name="city" id="city" onchange="changeLocation()">
+
+    </select>
+    经度：<input type="text" name="longitude" id="longitude"  size="10"/>
+    纬度：<input type="text" name="latitude" id="latitude"  size="10"/><br>
+</form>
+<div id="status"></div>
+</body>
+</html>
