@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<astrology>
+    <meta>
+        <julianDay>${julianDay}</julianDay>
+        <longitude>${longitude}</longitude>
+        <latitude>${latitude}</latitude>
+    </meta>
+    <houses>
+    #foreach ($house in $houses)
+        <house index="${velocityCount}" position="${house}"/>
+    #end
+    </houses>
+    <objects>
+    #foreach ($planet in $planets)
+        <object id="${planet.id}" name="${planet.planetName}" position="${planet.position}" speed="${planet.longitudeSpeed}"/>
+    #end
+    </objects>
+</astrology>

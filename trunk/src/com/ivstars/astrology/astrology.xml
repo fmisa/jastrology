@@ -1,0 +1,16 @@
+<?xml encoding="UTF-8"?>
+<astrology>
+    <meta>
+        <julianDay>2453807.123</julianDay>
+        <longitude>114.3</longitude>
+        <latitude>30.5</latitude>
+    </meta>
+    <houses>
+        <house index="1" position="24Ari02"/>
+        <house index="2" position="24Cap03"/>
+    </houses>
+    <objects>
+        <object id="0" name="Sun" position=""/>
+        <object id="1" name="Moon" position=""/>
+    </objects>
+</astrology>

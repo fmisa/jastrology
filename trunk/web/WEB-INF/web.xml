@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app
+ PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app>
+    <servlet>
+        <servlet-name>astro</servlet-name>
+        <servlet-class>com.ivstars.astrology.servlet.AstrologyServlet</servlet-class>
+        <init-param>
+            <param-name>datepattern</param-name>
+            <param-value>yyyy/M/d</param-value>
+        </init-param>
+        <init-param>  <!-- required param -->
+            <param-name>baseurl</param-name>
+            <param-value>/jastro/images/</param-value>
+        </init-param>
+        <init-param>   <!-- required param -->
+            <param-name>basefolder</param-name>
+            <param-value>../webapps/jastro/images/</param-value>
+        </init-param>
+        <init-param>
+            <param-name>filepattern</param-name>
+            <param-value>{0}/{1}-{2}-{3}.{4}</param-value>
+        </init-param>
+        <init-param>
+            <param-name>directmode</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>render</param-name>
+            <param-value>com.ivstars.astrology.ImageRender</param-value>
+        </init-param>
+        <init-param>
+            <param-name>image.width</param-name>
+            <param-value>576</param-value>
+        </init-param>
+        <init-param>
+            <param-name>image.height</param-name>
+            <param-value>576</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>location</servlet-name>
+        <servlet-class>com.ivstars.astrology.servlet.LocationServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>astro</servlet-name>
+
+        <url-pattern>/astro</url-pattern>         
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>astro</servlet-name>
+        <url-pattern>/astro.jpg</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>astro</servlet-name>
+        <url-pattern>/astro.png</url-pattern>         
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>astro</servlet-name>
+        <url-pattern>/astro.gif</url-pattern>         
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>location</servlet-name>
+        <url-pattern>/location</url-pattern>
+    </servlet-mapping>
+</web-app>

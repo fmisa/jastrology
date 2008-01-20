@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<locations>
+#foreach ($location in $locations)
+    <location>
+        <name>${location.name}</name>
+        <longitude>${location.longitude}</longitude>
+        <latitude>${location.latitude}</latitude>
+    </location>
+#end
+</locations>
