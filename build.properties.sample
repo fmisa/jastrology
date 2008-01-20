@@ -1,0 +1,10 @@
+# build settings
+# required libs and tools
+j2ee.lib=~/applications/apache-tomcat-6.0.14/lib
+izpack.home=~/applications/IzPack
+
+# output dirs
+build=target/build
+dist=target/dist
+pack=target/pack
+
