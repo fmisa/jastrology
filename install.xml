@@ -47,7 +47,7 @@
         The ids must be these ones if you want to use the LicencePanel and/or the InfoPanel.
     -->
     <resources>
-        <res id="LicencePanel.licence" src="Licence.txt"/>
+        <res id="LicencePanel.licence" src="License.txt"/>
         <res id="InfoPanel.info" src="Readme.txt"/>
         <res src="shortcutSpec.xml" id="shortcutSpec.xml" />
     </resources>
@@ -75,12 +75,14 @@
         <pack name="Base" required="yes">
             <description>Basical files</description>
             <file src="Readme.txt" targetdir="$INSTALL_PATH"/>
-            <file src="Licence.txt" targetdir="$INSTALL_PATH"/>
+            <file src="License.txt" targetdir="$INSTALL_PATH"/>
+            <file src="jastrology.sh" targetdir="$INSTALL_PATH"/>
             <file src="jastrology.bat" targetdir="$INSTALL_PATH"/>
             <file src="addpath.bat" targetdir="$INSTALL_PATH"/>
             <file src="star.ico" targetdir="$INSTALL_PATH"/>
             <file src="classes" targetdir="$INSTALL_PATH"/>
             <parsable targetfile="$INSTALL_PATH/jastrology.bat"/> <!-- The file will be parsed -->
+            <parsable targetfile="$INSTALL_PATH/jastrology.sh"/> <!-- The file will be parsed -->
         </pack>
         <pack name="lib" required="yes">
             <description>The library used in this program</description>
