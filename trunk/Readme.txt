@@ -40,3 +40,6 @@ http://www.ivstars.com/ is the offical website of Jastrology.
 You can get updates, support information from this site.
 There's a special BBS board on this site's forum, you can post your suggestion on it.
 For bug reports, write email to me <fengbo.xie@gmail.com>.
+
+[Online Manual]
+http://fengbo.xie.googlepages.com/home2

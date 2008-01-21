@@ -116,7 +116,7 @@
         <copy todir="${dist}/WEB-INF">
             <fileset dir="." includes="ephe/*.*"/>
             <fileset dir="resource" includes="CN.xls"/>
-            <fileset dir="." includes="jastrology.bat,addpath.bat,Licence.txt,Readme.txt"/>
+            <fileset dir="." includes="jastrology.sh,jastrology.bat,addpath.bat,License.txt,Readme.txt"/>
             <fileset dir="resource" includes="star.ico"/>
         </copy>
         
