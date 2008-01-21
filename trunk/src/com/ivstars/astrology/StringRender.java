@@ -18,6 +18,8 @@
  */
 package com.ivstars.astrology;
 
+import net.sf.anole.MessagerFactory;
+
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.Template;
 import org.apache.velocity.app.Velocity;
@@ -38,7 +40,8 @@ import com.ivstars.astrology.util.DegreeUtil;
  *         Everything that has a beginning has an end.
  */
 public class StringRender implements ChartRender{
-    private String info;
+	private static net.sf.anole.Messager messager = MessagerFactory.getMessager(Constants.BASE_PACKAGE);
+	private String info;
     public Object render(ChartModel model) {
         String[] positions = model.getHousesPosition();
         VelocityContext context = new VelocityContext();
@@ -50,23 +53,23 @@ public class StringRender implements ChartRender{
         String[] pos = new String[12];
         HousesInfo h=model.getHousesInfo();
         for(int i=0;i<12;i++){
-            pos[i]= DegreeUtil.format(h.get(i+1),"P h度m分");
+            pos[i]= DegreeUtil.format(h.get(i+1),"P h°m′");
         }
         context.put("houses",pos);
-        context.put("longitude",DegreeUtil.format(model.getLongitude(),"W h度m分"));
-        context.put("latitude",DegreeUtil.format(model.getLatitude(),"N h度m分"));
+        context.put("longitude",DegreeUtil.format(model.getLongitude(),"W h°m′"));
+        context.put("latitude",DegreeUtil.format(model.getLatitude(),"N h°m′"));
         PlanetInfo[] pi=model.getPlanets();
         String[] planets = new String[pi.length];
         for (int i = 0; i < pi.length; i++) {
             PlanetInfo info = pi[i];
-            planets[i]=info.getPlanetName()+"\t"+DegreeUtil.format(info.getLongitude(),"P h度m分");
+            planets[i]=info.getPlanetName()+"\t"+DegreeUtil.format(info.getLongitude(),"P h°m′");
             if(info.getLongitudeSpeed()<0)
-                planets[i]+="(逆行)";
+                planets[i]+=messager.getMessage("regressive");
         }
         context.put("planets",planets);
         context.put("ascsign", DegreeUtil.format(model.getHousesInfo().getAscendant(),"P"));
         try {
-            Template template = Velocity.getTemplate("info.vm");
+            Template template = Velocity.getTemplate(messager.getMessage("info.vm"));
             StringWriter writer = new StringWriter();
             template.merge(context,writer);
             writer.flush();

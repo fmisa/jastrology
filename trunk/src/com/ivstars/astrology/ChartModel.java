@@ -26,6 +26,8 @@ import java.util.TimeZone;
 import java.text.SimpleDateFormat;
 import java.awt.*;
 
+import net.sf.anole.MessagerFactory;
+
 import com.ivstars.astrology.util.DegreeUtil;
 import com.ivstars.astrology.util.CommonUtil;
 import com.ivstars.astrology.util.Location;
@@ -55,7 +57,7 @@ public class ChartModel {
         calc = new Calculator();
         options = ChartOptions.defaultOptions;
         this.timezone = TimeZone.getDefault();
-        name = "Unknown";
+        name = MessagerFactory.getMessager(Constants.BASE_PACKAGE).getMessage("ChartModel.name.Unknown");
     }
 
     public ChartModel(Date date, double latitude, double longitude) {
