@@ -90,7 +90,7 @@
         </copy>
     </target>
     <target name="run" depends="compile" description="run chart">
-         <java classname="com.ivstars.astrology.gui.Chart">
+         <java classname="com.ivstars.astrology.gui.Chart" fork="yes">
              <classpath >
                  <fileset dir="${lib}" includes="*.jar"/>
                  <pathelement location="${build}"/>
