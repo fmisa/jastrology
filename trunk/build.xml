@@ -22,7 +22,6 @@
     <property name="lib" value="lib"/>
     <property name="web" value="web"/>
     <property name="webapp.context" value="jastro"/>
-    <property name="j2ee.lib" value="D:/develop/apache-tomcat-5.5.15/common/lib"/>
 
     <property name="encoding"  value="UTF-8" />
     <property name="setup.args" value=""/>
@@ -30,8 +29,9 @@
     <property name="izpack.home" value="C:/Program Files/IzPack"/>
 
     <path id="class.path">
-        <fileset dir="${lib}" includes="*.jar"/>
-	    <fileset dir="${j2ee.lib}" includes="*.jar" />
+	    <fileset dir="${lib}" includes="*.jar"/>
+	    <!-- do not need this since we have servlet-api.jar at lib -->
+	    <!-- fileset dir="${j2ee.lib}" includes="*.jar" / -->
     </path>
     
     <target name="init">
@@ -110,7 +110,7 @@
             </fileset>
         </copy>
         <copy todir="${dist}/WEB-INF/lib">
-            <fileset dir="${lib}" excludes="junit*"/>
+            <fileset dir="${lib}" excludes="junit*,servlet-api.jar"/>
 			<fileset file="${build}/*.jar"/>
         </copy>
         <copy todir="${dist}/WEB-INF">
@@ -124,7 +124,7 @@
     <target name="clean" description="Clean up build and dist directories. ">
             <delete dir="${build}"/>
             <delete dir="${dist}"/>
-						<delete dir="${pack}"/>
+		<delete dir="${pack}"/>
     </target>
 
     <target name="war" depends="dist" description="package webApp war">
