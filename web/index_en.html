@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>Jastrology with Google Maps JavaScript API Example</title>
+		<!-- this API key is for http://jastrology.sourceforge.net -->
+    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAAjECuKUlHQ_yJ7VjOb0SQRSAxfZufeikYXeUKu7-Faj_rSKo7RQKzC1sn-oOdaCiWTd2FuFCOuud3w" type="text/javascript"></script>
+    <script type="text/javascript">
+
+    //<![CDATA[
+
+    function load() {
+      if (GBrowserIsCompatible()) {
+        var map = new GMap2(document.getElementById("map"));
+        map.setCenter(new GLatLng(54.0, 0), 3);
+				map.addControl(new GLargeMapControl());
+			 GEvent.addListener(map, "click", function(overlau,point) {
+  					$('longitude').value = point.lng();
+						$('latitude').value = point.lat();
+				});
+
+      }
+    }
+		function $(id){
+			return document.getElementById(id);
+		}
+    //]]>
+    </script>
+  </head>
+  <body onload="load()" onunload="GUnload()">
+	<form action="astro" method="post">
+	<input type="hidden" name="lang" value="en" />
+    Time：<input type="text" name="date" size="20" value="1980-4-10 18:00:00"/>
+    Time Zone:<select name="timezone" id="tz">
+    <option value="GMT-12">-12</option>
+    <option value="GMT-11">-11</option>
+    <option value="GMT-10">-10</option>
+    <option value="GMT-9">-9</option>
+    <option value="GMT-8">-8</option>
+    <option value="GMT-7">-7</option>
+    <option value="GMT-6">-6</option>
+    <option value="GMT-5">-5</option>
+    <option value="GMT-4">-4</option>
+    <option value="GMT-3">-3</option>
+    <option value="GMT-2">-2</option>
+    <option value="GMT-1">-1</option>
+    <option value="GMT+0" SELECTED>0</option>
+    <option value="GMT+2">+2</option>
+    <option value="GMT+3">+3</option>
+    <option value="GMT+4">+4</option>
+    <option value="GMT+5">+5</option>
+    <option value="GMT+6">+6</option>
+    <option value="GMT+7">+7</option>
+    <option value="GMT+8" >+8</option>
+    <option value="GMT+9">+9</option>
+    <option value="GMT+10">+10</option>
+    <option value="GMT+11">+11</option>
+    <option value="GMT+12">+12</option>
+</select>Result format：<select name="type">
+    <option value="text">xml</option>
+    <option value="jpg" selected>jpg</option>
+    <option value="png">png</option>
+    <option value="gif">gif</option>
+</select>  
+    <br>
+    Location(You can auto-fill it by click at the google map below)   
+    Longitude：<input type="text" name="longitude" id="longitude"  size="20"/>
+    Latitude：<input type="text" name="latitude" id="latitude"  size="20"/><br>            
+    <input type="submit"/>&nbsp;<input type="reset"/>
+</form>
+<div id="status"></div>
+    <div id="map" style="width: 500px; height: 300px"></div>
+  </body>
+</html>
