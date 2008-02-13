@@ -1,4 +1,4 @@
-<html>
+﻿<html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
     <title>Astrology Servlet 测试页面</title>
@@ -13,8 +13,9 @@
         map.setCenter(new GLatLng(39.917, 116.397), 3);
 				map.addControl(new GLargeMapControl());
 			 GEvent.addListener(map, "click", function(overlau,point) {
-  					$('longitude').value = point.lng();
-						$('latitude').value = point.lat();
+			 
+  					$('longitude').value = point.lng(); // 得到经度
+						$('latitude').value = point.lat();  // 得到纬度
 				});
 
       }
@@ -87,6 +88,7 @@
             var index = document.getElementById("city").selectedIndex;
             document.getElementById("longitude").value=longitudes[index];
             document.getElementById("latitude").value=latitudes[index];
+map.setCenter(new GLatLng(parseFloat(latitudes[index]), parseFloat(longitudes[index])), 10);
         }
         function createOption(text){
             var option = document.createElement("option");
@@ -101,7 +103,7 @@
     </script>
 </head>
 
-<body onload="load()" onunload="GUnload()">
+<body onLoad="load()" onUnload="GUnload()">
 <form action="astro" method="post">
     时间：<input type="text" name="date" size="20" value="1980-4-10 18:00:00"/>
     时区:<select name="timezone">
@@ -137,7 +139,7 @@
 </select>             <br>
 
     位置选择
-    <select id="province" name="province" onchange="changeProvince()">
+    <select id="province" name="province" onChange="changeProvince()">
         <option value="">－请选择省份－</option>
         <option value="北京市">北京市</option>
         <option value="安徽省">安徽省</option>
@@ -172,7 +174,7 @@
         <option value="浙江省">浙江省</option>
         <option value="港澳台">港澳台</option>
     </select>
-    <select name="city" id="city" onchange="changeLocation()">
+    <select name="city" id="city" onChange="changeLocation()">
 
     </select>
     经度：<input type="text" name="longitude" id="longitude"  size="10"/>
@@ -181,6 +183,6 @@
 </form>
 <div id="status"></div>
 <hr>
-<div id="map" style="width: 500px; height: 300px"></div>
+<div id="map" style="width: 600px; height: 400px"></div>
 </body>
 </html>
