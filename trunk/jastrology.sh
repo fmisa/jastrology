@@ -4,7 +4,7 @@ if [ -z "$JASTROLOGY_HOME" ]; then
 	JASTROLOGY_HOME=.
 fi
 MAIN_CLASS=com.ivstars.astrology.gui.Chart
-if [ -f "$JASTROLOGY_HOME/classes" ]; then
+if [ -d "$JASTROLOGY_HOME/classes" ]; then
 	TMP_CP=$JASTROLOGY_HOME/classes
 else
 	TMP_CP=$JASTROLOGY_HOME/target/build
